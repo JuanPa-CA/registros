@@ -4,75 +4,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD</title>
+    <title>CRUD - Registro Neón</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
+
     <style>
         body {
-            background: linear-gradient(135deg, #054f58, #32c0c0, #50daec);
-            color: #e0e0e0;
+            background: linear-gradient(-45deg, #1a0f28, #0e1d2e, #0d1117, #1b0a2c);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px 0;
-            overflow-x: hidden; 
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .container {
-            max-width: 1000px;
-            margin: auto;
+            max-width: 900px;
         }
 
         .card {
-            background-color: rgba(30, 30, 50, 0.9);
-            border: 1px solid #4a00e0;
-            box-shadow: 0 0 20px rgba(74, 0, 224, 0.5), 0 0 10px rgba(0, 255, 255, 0.2);
+            background-color: #161b22;
+            border: 1px solid #30363d;
             border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 255, 255, 0.1), 0 0 20px rgba(0, 255, 255, 0.05);
             margin-bottom: 30px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
-        h2, h4 {
+        h2,
+        h4 {
             color: #00ffff;
-            text-shadow: 0 0 5px #00ffff;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+            font-weight: 600;
         }
 
         .form-control {
-            background-color: #2a2a4a;
-            color: #00ff00;
+            background-color: #0d1117;
             border: 1px solid #00ffff;
-            box-shadow: none !important;
+            color: #ffffff;
+            border-radius: 8px;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
-        .form-control::placeholder {
-            color: rgba(0, 255, 255, 0.5);
-        }
-        
         .form-control:focus {
-            border-color: #4a00e0;
-            box-shadow: 0 0 10px rgba(74, 0, 224, 0.8) !important;
+            background-color: #0d1117;
+            border-color: #00ffff;
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
+            color: #ffffff;
         }
 
         .btn-success {
-            background-color: #00e0cd;
+            background-color: #00ffff;
             border-color: #00ffff;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-            transition: all 0.3s ease;
+            color: #161b22;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: transform 0.2s, box-shadow 0.3s;
         }
 
         .btn-success:hover {
-            background-color: #00ffff;
-            color: #f7f4fd;
-            border-color: #a489da;
-            box-shadow: 0 0 15px #00ffff, 0 0 5px #4a00e0;
+            background-color: #00d9d9;
+            border-color: #00d9d9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
         }
 
+        /* Estilo para el botón de Actualizar */
         .btn-update {
-            background-color: #7d00ff; 
+            background-color: #7d00ff;
             border-color: #a489da;
             color: #ffffff;
+            font-weight: bold;
             box-shadow: 0 0 10px rgba(125, 0, 255, 0.8);
             transition: all 0.3s ease;
         }
@@ -82,60 +105,62 @@
             color: #1a1a3a;
             border-color: #7d00ff;
             box-shadow: 0 0 20px #7d00ff;
+            transform: translateY(-2px);
         }
 
         .table-dark {
-            background-color: #1a1a3a;
+            background-color: #0d1117;
+            border-color: #00ffff;
+        }
+
+        .table-bordered {
+            border-color: #30363d;
+        }
+
+        .table-bordered td,
+        .table-bordered th {
+            border-color: #30363d;
+        }
+
+        .table>:not(caption)>*>* {
+            background-color: #161b22;
+            color: #e6e6e6;
+        }
+
+        .table tbody tr:hover {
+            background-color: #1e242b !important;
             color: #00ffff;
-            border-bottom: 2px solid #00ffff;
-        }
-        
-        .table {
-            --bs-table-padding-y: 0.5rem; 
-            --bs-table-padding-x: 0.8rem; 
-            --bs-table-bg: #2a2a4a; 
-            --bs-table-color: #e0e0e0;
-            --bs-table-border-color: #856fb1;
-            font-size: 0.95rem;
-        }
-        
-        #datos tr {
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
         }
 
-        #datos tr:hover {
-            background-color: #3b3b5b; 
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-        }
-
-        .btn-edit, .btn-delete {
+        .btn-edit,
+        .btn-delete {
             background: none;
             border: none;
             cursor: pointer;
-            padding: 5px 10px; 
             font-size: 1.2rem;
-            transition: color 0.2s ease, transform 0.2s ease; 
+            padding: 5px 10px;
+            transition: color 0.2s;
         }
 
         .btn-edit {
-            color: #00ffff;
-        }
-        
-        .btn-delete {
-            color: #ff007f;
+            color: #01f03d;
         }
 
         .btn-edit:hover {
-            color: #00ff00;
-            transform: scale(1.1); 
+            color: #73ff66;
+            text-shadow: 0 0 5px #97fd79;
+        }
+
+        .btn-delete {
+            color: #ff0000;
         }
 
         .btn-delete:hover {
-            color: #ffcc00;
-            transform: scale(1.1);
+            color: #df2929;
+            text-shadow: 0 0 5px #ff0015;
         }
-        
+
+        /* Estilos de Alerta Personalizada (Retomados del primer ejemplo) */
         .alert-custom {
             position: fixed;
             top: 20px;
@@ -148,36 +173,29 @@
             transition: opacity 0.5s ease-in-out;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-        
+
         .alert-error {
-            background-color: #ff007f; 
+            background-color: #ff007f;
             border: 1px solid #ff00ff;
         }
-        
+
         .alert-success {
-            background-color: #00e0cd; 
+            background-color: #00e0cd;
             border: 1px solid #00ffff;
         }
-        
+
         .show-alert {
             opacity: 1;
         }
-
-        #datos td:first-child {
-            font-size: 0.75rem;
-            word-break: break-all;
-            max-width: 50px;
-        }
-        
     </style>
 </head>
 
 <body>
     <div id="feedbackAlert" class="alert-custom d-none" role="alert"></div>
 
-    <div class="container">
+    <div class="container mt-5">
         <div class="card shadow p-4">
-            <h2 class="text-center mb-4">Registros</h2>
+            <h2 class="text-center mb-4"><i class="bi bi-person-badge me-2"></i>Registros</h2>
 
             <div class="row g-3">
                 <div class="col-md-4">
@@ -194,22 +212,25 @@
             </div>
 
             <div class="text-center mt-4">
-                <button id="btnGuardar" class="btn btn-success px-4 fw-bold">Guardar Nuevo</button>
+                <button id="btnGuardar" class="btn btn-success px-4"><i class="bi bi-save me-2"></i>Guardar Nuevo</button>
             </div>
         </div>
-        
+
+        <hr style="border-color: #30363d;">
+
         <div class="table-container">
             <div class="card shadow p-3">
-                <h4 class="mb-3 text-center">Lista de Registros</h4>
+                <h4 class="mb-3 text-center"><i class="bi bi-table me-2"></i>Lista de Registros</h4>
                 
                 <div class="mb-3">
                     <input type="text" id="buscador" class="form-control" placeholder="Buscar por ID, Nombre o Apellido...">
                 </div>
+
                 <div class="table-responsive">
                     <table class="table table-bordered align-middle text-center">
                         <thead class="table-dark">
                             <tr>
-                                <th>ID Único</th> 
+                                <th>ID</th>
                                 <th>Nombre</th>
                                 <th>Apellidos</th>
                                 <th>Teléfono</th>
@@ -218,193 +239,173 @@
                         </thead>
 
                         <tbody id="datos">
-                            </tbody>
+                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
-    
-    <script>
-        let inpNombre = document.getElementById("nombre");
-        let inpApellido = document.getElementById("apellido");
-        let inpTelefono = document.getElementById("telefono");
-        let inpBuscador = document.getElementById("buscador"); 
-        let registro = JSON.parse(localStorage.getItem('crudRegistro')) || []; 
-        let idActualizar = null;
-        let btnGuardar = document.getElementById("btnGuardar");
-        const feedbackAlert = document.getElementById("feedbackAlert");
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 
-        function mostrarAlerta(mensaje, tipo) {
-            feedbackAlert.innerHTML = mensaje; 
-            feedbackAlert.className = `alert-custom show-alert alert-${tipo}`;
-            feedbackAlert.classList.remove('d-none');
+        <script>
+    let inpNombre = document.getElementById("nombre");
+    let inpApellido = document.getElementById("apellido");
+    let inpTelefono = document.getElementById("telefono");
+    let inpBuscador = document.getElementById("buscador");
+    let registro = []; 
+    let idActualizar = null;
+    let btnGuardar = document.getElementById("btnGuardar");
+    const feedbackAlert = document.getElementById("feedbackAlert");
 
+    function mostrarAlerta(mensaje, tipo) {
+        feedbackAlert.innerHTML = mensaje;
+        feedbackAlert.className = `alert-custom show-alert alert-${tipo}`;
+        feedbackAlert.classList.remove('d-none');
+
+        setTimeout(() => {
+            feedbackAlert.classList.remove('show-alert');
             setTimeout(() => {
-                feedbackAlert.classList.remove('show-alert');
+                feedbackAlert.classList.add('d-none');
+            }, 500);
+        }, 3000);
+    }
 
-                setTimeout(() => {
-                    feedbackAlert.classList.add('d-none');
-                }, 500); 
-            }, 3000);
+    function limpiar() {
+        inpNombre.value = "";
+        inpApellido.value = "";
+        inpTelefono.value = "";
+        inpBuscador.value = "";
+    }
+
+    function filtrarRegistros(busqueda) {
+        const termino = busqueda.toLowerCase();
+        if (!termino) {
+            return registro;
+        }
+        return registro.filter(item =>
+            item.nombre.toLowerCase().includes(termino) ||
+            item.apellido.toLowerCase().includes(termino) ||
+            String(item.id).includes(termino)
+        );
+    }
+
+    inpBuscador.addEventListener('input', (e) => {
+        const resultados = filtrarRegistros(e.target.value.trim());
+        pintar(resultados);
+    });
+
+
+    btnGuardar.addEventListener("click", () => {
+        const nombreVal = inpNombre.value.trim();
+        const apellidoVal = inpApellido.value.trim();
+        const telefonoVal = inpTelefono.value.trim();
+
+        if (nombreVal === "" || apellidoVal === "" || telefonoVal === "") {
+            mostrarAlerta("Todos los campos son obligatorios.", "error");
+            return;
         }
 
-        function guardarEnLocalStorage() {
-            localStorage.setItem('crudRegistro', JSON.stringify(registro));
-        }
+        let mensajeAlerta = "";
+        let tipoAlerta = "";
 
-        inpTelefono.addEventListener('input', (event) => {
-            event.target.value = event.target.value.replace(/[^0-9]/g, ''); 
-        });
-
-
-        btnGuardar.addEventListener("click", () => {
-            const nombreVal = inpNombre.value.trim();
-            const apellidoVal = inpApellido.value.trim();
-            const telefonoVal = inpTelefono.value.trim();
-
-            if (nombreVal === "" || apellidoVal === "" || telefonoVal === "") {
-                mostrarAlerta("Todos los campos son obligatorios", "error");
-                return;
-            }
-
-            let mensajeAlerta = "";
-            let tipoAlerta = "";
-
-            if (idActualizar !== null) {
-                let indice = registro.findIndex(item => item.id === idActualizar);
-                if (indice !== -1) {
-                    registro[indice].nombre = nombreVal;
-                    registro[indice].apellido = apellidoVal;
-                    registro[indice].telefono = telefonoVal;
-                    mensajeAlerta = `Registro de ${nombreVal} actualizado con éxito.`;
-                    tipoAlerta = "success";
-                }
-                idActualizar = null;
-                btnGuardar.textContent = "Guardar Nuevo";
-                btnGuardar.classList.remove("btn-update"); 
-                btnGuardar.classList.add("btn-success");
-                
-            } else {
-                let data = {
-                    id: Date.now(), 
-                    nombre: nombreVal,
-                    apellido: apellidoVal,
-                    telefono: telefonoVal
-                };
-                registro.push(data);
-                mensajeAlerta = `Nuevo registro de ${nombreVal} guardado con éxito.`;
+        if (idActualizar !== null) {
+            let indice = registro.findIndex(item => item.id === idActualizar);
+            if (indice !== -1) {
+                registro[indice].nombre = nombreVal;
+                registro[indice].apellido = apellidoVal;
+                registro[indice].telefono = telefonoVal;
+                mensajeAlerta = `Registro de ${nombreVal} actualizado con éxito.`;
                 tipoAlerta = "success";
             }
-
-            guardarEnLocalStorage(); 
-            pintar(registro);
-            limpiar();
-            mostrarAlerta(mensajeAlerta, tipoAlerta);
-        });
-
-        function limpiar() {
-            inpNombre.value = "";
-            inpApellido.value = "";
-            inpTelefono.value = "";
-            inpBuscador.value = ""; 
+            idActualizar = null;
+            btnGuardar.innerHTML = '<i class="bi bi-save me-2"></i> Guardar Nuevo';
+            btnGuardar.classList.remove("btn-update");
+            btnGuardar.classList.add("btn-success");
+        } else {
+            let data = {
+                id: Date.now(), 
+                nombre: nombreVal,
+                apellido: apellidoVal,
+                telefono: telefonoVal
+            };
+            registro.push(data);
+            mensajeAlerta = `Nuevo registro de ${nombreVal} guardado con éxito.`;
+            tipoAlerta = "success";
         }
- 
-        function filtrarRegistros(busqueda) {
-            const termino = busqueda.toLowerCase();
-            if (!termino) {
-                return registro;
-            }
-            return registro.filter(item => 
-                item.nombre.toLowerCase().includes(termino) ||
-                item.apellido.toLowerCase().includes(termino) ||
+        pintar(registro);
+        limpiar();
+        mostrarAlerta(mensajeAlerta, tipoAlerta);
+    });
 
-                String(item.id).slice(-6).includes(termino) 
-            );
+
+    function pintar(datosAPintar) {
+        const tbody = document.getElementById("datos");
+        tbody.innerHTML = "";
+        const lista = datosAPintar || registro;
+
+        if (lista.length === 0) {
+            let tr = document.createElement("tr");
+            tr.innerHTML = `<td colspan="5" class="text-center py-4 text-warning"> No hay registros para mostrar </td>`;
+            tbody.appendChild(tr);
+            return;
         }
 
-        inpBuscador.addEventListener('input', (e) => {
-            const resultados = filtrarRegistros(e.target.value.trim());
-            pintar(resultados);
-        });
+        lista.forEach((item, indice) => {
+            let tr = document.createElement("tr");
 
-        function pintar(datosAPintar) {
-            const tbody = document.getElementById("datos");
-            tbody.innerHTML = ""; 
-            const lista = datosAPintar || registro;
+            tr.innerHTML = `
+                <td>${item.id}</td>
+                <td>${item.nombre}</td>
+                <td>${item.apellido}</td>
+                <td>${item.telefono}</td>
+                <td>
+                    <button class="btn-edit me-2" title="Editar">
+                        <i class="bi bi-pencil-fill"></i>
+                    </button>
 
-            if (lista.length === 0) {
-                let tr = document.createElement("tr");
-                tr.innerHTML = `<td colspan="5" class="text-center py-4 text-warning"> No hay registros para mostrar </td>`;
-                tbody.appendChild(tr);
-                return;
-            }
+                    <button class="btn-delete" title="Eliminar" data-id="${item.id}" data-nombre="${item.nombre}">
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
+                </td>
+            `;
 
-            lista.forEach((item, indice) => {
-                let tr = document.createElement("tr");
-                tr.className = 'align-middle'; 
-                
-                const idCorto = String(item.id).slice(-6); 
+            tr.querySelector(".btn-delete").addEventListener("click", (e) => {
+                const idAEliminar = parseInt(e.currentTarget.getAttribute('data-id'));
+                const nombreAEliminar = e.currentTarget.getAttribute('data-nombre');
 
-                tr.innerHTML = `
-                    <td>${idCorto}</td>
-                    <td>${item.nombre}</td>
-                    <td>${item.apellido}</td>
-                    <td>${item.telefono}</td>
-                    <td>
-                        <button class="btn-edit me-2" title="Editar Registro">
-                            <i class="bi bi-pencil-fill"></i>
-                        </button>
+                if (confirm(`¿Seguro que quieres eliminar el registro de ${nombreAEliminar} (ID: ${idAEliminar})?`)) {
+                    const indiceAEliminar = registro.findIndex(i => i.id === idAEliminar);
 
-                        <button class="btn-delete" title="Eliminar Registro" data-nombre="${item.nombre}" data-id="${item.id}" data-id-corto="${idCorto}">
-                            <i class="bi bi-trash-fill"></i>
-                        </button>
-                    </td>
-                `;
+                    if (indiceAEliminar !== -1) {
+                        registro.splice(indiceAEliminar, 1);
 
-                tr.querySelector(".btn-delete").addEventListener("click", (e) => {
-                    const nombreAEliminar = e.currentTarget.getAttribute('data-nombre');
-                    const idAEliminar = parseInt(e.currentTarget.getAttribute('data-id'));
-                    const idCortoAEliminar = e.currentTarget.getAttribute('data-id-corto'); 
+                        const busquedaActual = inpBuscador.value.trim();
+                        pintar(filtrarRegistros(busquedaActual));
 
-                    if (window.confirm(`Confirmar eliminación de ${nombreAEliminar} (ID: ${idCortoAEliminar}).`)) {
-                        const indiceAEliminar = registro.findIndex(i => i.id === idAEliminar);
-                        
-                        if (indiceAEliminar !== -1) {
-                            registro.splice(indiceAEliminar, 1);
-                            guardarEnLocalStorage();
-                            
-                            const busquedaActual = inpBuscador.value.trim();
-                            if (busquedaActual) {
-                                pintar(filtrarRegistros(busquedaActual));
-                            } else {
-                                pintar(registro);
-                            }
-                            
-                            mostrarAlerta(`Registro de ${nombreAEliminar} eliminado.`, "error");
-                        }
+                        mostrarAlerta(`Registro de ${nombreAEliminar} eliminado.`, "error");
                     }
-                });
-
-                tr.querySelector(".btn-edit").addEventListener("click", () => {
-                    inpNombre.value = item.nombre;
-                    inpApellido.value = item.apellido;
-                    inpTelefono.value = item.telefono;
-                    idActualizar = item.id; 
-                    btnGuardar.textContent = "Actualizar Datos";
-                    
-                    btnGuardar.classList.remove("btn-success");
-                    btnGuardar.classList.add("btn-update"); 
-                });
-
-                tbody.appendChild(tr);
+                }
             });
-        }
-        pintar(registro); 
-    </script>
 
+            tr.querySelector(".btn-edit").addEventListener("click", () => {
+                inpNombre.value = item.nombre;
+                inpApellido.value = item.apellido;
+                inpTelefono.value = item.telefono;
+                idActualizar = item.id;
+                btnGuardar.innerHTML = '<i class="bi bi-arrow-clockwise me-2"></i> Actualizar Datos';
+                btnGuardar.classList.remove("btn-success");
+                btnGuardar.classList.add("btn-update");
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            tbody.appendChild(tr);
+        });
+    }
+    pintar();
+</script>
+</body>
 </html>
